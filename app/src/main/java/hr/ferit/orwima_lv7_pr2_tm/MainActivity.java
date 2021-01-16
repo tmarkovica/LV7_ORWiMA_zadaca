@@ -12,10 +12,13 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ButtonClickListener {
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+
+    private InputFragment mInputFragment = new InputFragment();
+    private MessageFragmet mMessageFragment = new MessageFragmet();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +29,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpViewPager() {
-        List<Fragment> fragmentList = new ArrayList();
+        List<Fragment> fragmentList = new ArrayList<Fragment>();
+
+
+        fragmentList.add(mInputFragment);
+        fragmentList.add(mMessageFragment);
+
         fragmentList.add(SlideFragment.newInstance("This is fragment #1"));
+
         fragmentList.add(SlideFragment.newInstance("This is fragment #2"));
-        //fragmentList.add(SlideFragment.newInstance("This is fragment #3"));
-        //fragmentList.add(new MessageFragment());
-        fragmentList.add(SlideFragment.newInstance("This is fragment #4"));
-        fragmentList.add(SlideFragment.newInstance("This is fragment #5"));
+
+        fragmentList.add(SlideFragment.newInstance("This is fragment #3"));
+
+
         SlidePagerAdapter adapter = new SlidePagerAdapter(getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -41,5 +50,10 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         mViewPager = findViewById(R.id.viewPager);
         mTabLayout = findViewById(R.id.tabLayout);
+    }
+
+    @Override
+    public void onButtonClicked(String message) {
+        mMessageFragment.displayMessage(message);
     }
 }
