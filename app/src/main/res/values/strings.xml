@@ -5,4 +5,8 @@
     <string name="hello_world">Hello World</string>
     <string name="enter_message">Enter Message</string>
     <string name="submit">Submit</string>
+    <string name="switch_fragments">Switch Fragment</string>
+    <string name="editTextShowText">Edit Text</string>
+    <string name="buttonTextAddPerson">Add Person</string>
+    <string name="textViewRemovePerson">X</string>
 </resources>

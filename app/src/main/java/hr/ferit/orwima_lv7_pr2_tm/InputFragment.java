@@ -45,6 +45,7 @@ public class InputFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mListener.onButtonClicked(mEditText.getText().toString());
+                mEditText.setText("");
             }
         });
     }
