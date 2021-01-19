@@ -3,6 +3,7 @@ package hr.ferit.orwima_lv7_pr2_tm;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -20,56 +21,51 @@ public class MainActivity extends AppCompatActivity implements ButtonClickListen
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
 
-    private InputFragment mInputFragment = new InputFragment();
-    private MessageFragmet mMessageFragment = new MessageFragmet();
+    private InputFragment mInputFragment;
+    private MessageFragmet mMessageFragment;
 
-    private ModularFragment mModularFragment;
     private fragment_modular mfragment_modular;
+
+    private fragment_modular_first first;
+    private fragment_modular_second second;
+
+    private FragmentManager mFragmentManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mModularFragment = new ModularFragment();
 
-        mfragment_modular = new fragment_modular(this);
-        setRecyclerView();
 
+        mFragmentManager = getSupportFragmentManager();
+
+        // ---------------------------
+
+        createFragments();
         initViews();
         setUpViewPager();
+        //setUpFragments();
     }
 
-    private List<String> dataList;
-    private void setupNames() {
-        dataList = new ArrayList<>();
-        dataList.add("Robin");
-        dataList.add("David");
-        dataList.add("Filip");
-        dataList.add("Petar");
-        dataList.add("Laura");
-        dataList.add("Mihaela");
-        dataList.add("Ana");
-        dataList.add("Vlatka");
-        dataList.add("Robin2");
-        dataList.add("David2");
-        dataList.add("Filip2");
-        dataList.add("Petar2");
-        dataList.add("Laura2");
-        dataList.add("Mihaela2");
-        dataList.add("Ana2");
-        dataList.add("Vlatka2");
+    private void createFragments() {
+        mMessageFragment = new MessageFragmet();
+        mInputFragment = new InputFragment();
+
+        // novi fragmenti
+        mfragment_modular = new fragment_modular();
+        first = new fragment_modular_first();
+        first.createCustomAdapter(this);
+        second = new fragment_modular_second();
     }
 
-    private void setRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-
-        setupNames();
-        CustomAdapter customAdapter = new CustomAdapter(dataList, this);
-        //recyclerView.setAdapter(customAdapter);
-        //mfragment_modular.setRecyclerView(recyclerView);
+    public void setUpFragments() {
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.firstFragment, mMessageFragment);
+        fragmentTransaction.add(R.id.secondFragment, mInputFragment);
+        fragmentTransaction.commit();
     }
-
 
     private void setUpViewPager() {
         List<Fragment> fragmentList = new ArrayList<Fragment>();
@@ -80,12 +76,11 @@ public class MainActivity extends AppCompatActivity implements ButtonClickListen
 
         fragmentList.add(SlideFragment.newInstance("This is fragment #1"));
 
-        fragmentList.add(SlideFragment.newInstance("This is fragment #2"));
-
-        fragmentList.add(SlideFragment.newInstance("This is fragment #3"));
-
+        //
         fragmentList.add(mfragment_modular);
-
+        fragmentList.add(first);
+        fragmentList.add(second);
+        //
 
         SlidePagerAdapter adapter = new SlidePagerAdapter(getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(adapter);

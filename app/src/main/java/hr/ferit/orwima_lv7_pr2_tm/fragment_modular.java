@@ -4,8 +4,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,11 +26,12 @@ import java.util.jar.Attributes;
  */
 public class fragment_modular extends Fragment {
 
-    private FragmentManager mFragmentManager;
-    private boolean mSwitched = false;
+    private MessageFragmet mMessageFragment;
+    private InputFragment mInputFragment;
 
-    private fragment_modular_first mModular_first;
-    private fragment_modular_second mModular_second;
+    private FragmentManager mFragmentManager;
+
+    private boolean mSwitched = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,64 +43,5 @@ public class fragment_modular extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        setUpFragments();
-    }
-
-    private void setUpFragments() {
-        mModular_first = new fragment_modular_first();
-       /* mModular_second = new fragment_modular_second();
-
-        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.firstFragment, mModular_first);
-        fragmentTransaction.add(R.id.secondFragment, mModular_second);
-        fragmentTransaction.commit();*/
-    }
-
-
-
-    // for RecyclerView
-    private RecyclerView recyclerView;
-    private List<String> dataList;
-    private CustomAdapter customAdapter;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-
-    }
-
-    private void setupNames() {
-        dataList = new ArrayList<>();
-        dataList.add("Robin");
-        dataList.add("David");
-        dataList.add("Filip");
-        dataList.add("Petar");
-        dataList.add("Laura");
-        dataList.add("Mihaela");
-        dataList.add("Ana");
-        dataList.add("Vlatka");
-        dataList.add("Robin2");
-        dataList.add("David2");
-        dataList.add("Filip2");
-        dataList.add("Petar2");
-        dataList.add("Laura2");
-        dataList.add("Mihaela2");
-        dataList.add("Ana2");
-        dataList.add("Vlatka2");
-    }
-
-    private NameClickListener nameClickListener;
-
-    public fragment_modular(NameClickListener nameClickListener) {
-        setupNames();
-        this.nameClickListener = nameClickListener;
-        this.customAdapter = new CustomAdapter(dataList,  this.nameClickListener);
-    }
-
-    public void setRecyclerView(RecyclerView recyclerView) {
-        this.recyclerView = recyclerView;
     }
 }
